@@ -1,7 +1,7 @@
 {
-  "name": "dsh-provider-clone",
-  "version": "0.1.0",
-  "description": "Copy a provider preset's route configuration (endpoint, protocol, model list) into an independently named copy with its own API key, then switch in the model picker.",
+  "name": "dsh-route-clone",
+  "version": "0.2.0",
+  "description": "DSH plugin: copy a provider preset's route configuration into an independently named route group with its own API key.",
   "license": "MIT",
   "author": "kabarryo",
   "type": "module",
@@ -44,10 +44,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kabarryo/dsh-provider-clone.git"
+    "url": "git+https://github.com/kabarryo/dsh-route-clone.git"
   },
-  "homepage": "https://github.com/kabarryo/dsh-provider-clone#readme",
+  "homepage": "https://github.com/kabarryo/dsh-route-clone#readme",
   "bugs": {
-    "url": "https://github.com/kabarryo/dsh-provider-clone/issues"
+    "url": "https://github.com/kabarryo/dsh-route-clone/issues"
   }
 }

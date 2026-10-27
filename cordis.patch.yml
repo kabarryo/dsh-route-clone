@@ -1,5 +1,5 @@
-# dsh-provider-clone bundle patch: one Host row plus the browser half declared
+# dsh-route-clone bundle patch: one Host row plus the browser half declared
 # by package.json's dsh.client metadata.
 - insert:
-    - id: provider-clone
-      name: dsh-provider-clone
+    - id: route-clone
+      name: dsh-route-clone

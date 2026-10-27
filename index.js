@@ -1,5 +1,5 @@
 /**
- * dsh-provider-clone — Host half.
+ * dsh-route-clone — Host half.
  *
  * A "provider clone" is a second pi-ai route that points at the same upstream
  * as an existing catalog provider but carries its own credential reference.
@@ -28,7 +28,7 @@
  * schemastery and the pi-ai catalog are resolved from DSH's own profile
  * `node_modules` at runtime.
  *
- * @module dsh-provider-clone
+ * @module dsh-route-clone
  */
 
 import fs from 'node:fs'
@@ -38,7 +38,7 @@ import { AsyncLocalStorage } from 'node:async_hooks'
 import { pathToFileURL } from 'node:url'
 
 /** Stable plugin name. */
-export const name = 'dsh-provider-clone'
+export const name = 'dsh-route-clone'
 
 /** The pi-ai settings section this plugin materializes profiles into. */
 const PI_AI_NS = 'llm-pi-ai'
@@ -110,7 +110,7 @@ async function loadSchemastery() {
     return mod.default ?? mod
   } catch {}
   const dir = packageDir('@deepseek-ai/schemastery')
-  if (dir === undefined) throw new Error('dsh-provider-clone: cannot locate @deepseek-ai/schemastery')
+  if (dir === undefined) throw new Error('dsh-route-clone: cannot locate @deepseek-ai/schemastery')
   const manifest = JSON.parse(fs.readFileSync(path.join(dir, 'package.json'), 'utf8'))
   const entry = manifest.exports?.['.']?.import ?? manifest.module ?? manifest.main
   const mod = await import(pathToFileURL(path.join(dir, entry)).href)
@@ -126,7 +126,7 @@ async function loadCatalog() {
     return await import('@earendil-works/pi-ai/providers/all')
   } catch {}
   const dir = packageDir('@earendil-works/pi-ai')
-  if (dir === undefined) throw new Error('dsh-provider-clone: cannot locate @earendil-works/pi-ai')
+  if (dir === undefined) throw new Error('dsh-route-clone: cannot locate @earendil-works/pi-ai')
   return import(pathToFileURL(path.join(dir, 'dist', 'providers', 'all.js')).href)
 }
 
@@ -161,7 +161,7 @@ function read(value) {
 const LOG_PATH = path.join(
   process.env.DSH_HOME ?? path.join(os.homedir(), '.dsh'),
   'logs',
-  'provider-clone.log',
+  'route-clone.log',
 )
 
 /**
@@ -534,7 +534,7 @@ function installFetchShim(logger) {
   shimmedFetch = wrapFetch(originalFetch)
   globalThis.fetch = shimmedFetch
   shimInstalled = true
-  logger?.debug?.(`dsh-provider-clone: ${HEADER} shim installed`)
+  logger?.debug?.(`dsh-route-clone: ${HEADER} shim installed`)
 }
 
 /** Restore the original fetch when this plugin unloads. */
@@ -558,7 +558,7 @@ export const inject = ['settings']
  */
 export function apply(ctx, config) {
   // The clones form is written by the Models page, not by a generated page.
-  ctx.effect(() => ctx.settings.configure({ auto: false }, ctx.fiber), 'dsh-provider-clone: settings page policy')
+  ctx.effect(() => ctx.settings.configure({ auto: false }, ctx.fiber), 'dsh-route-clone: settings page policy')
 
   const settings = ctx.settings
   const settingsNs = ctx.fiber.entry?.options.id ?? name
@@ -672,7 +672,7 @@ export function apply(ctx, config) {
   ctx.effect(() => {
     installFetchShim(ctx.logger)
     return () => restoreFetchShim()
-  }, 'dsh-provider-clone: opencode session header shim')
+  }, 'dsh-route-clone: opencode session header shim')
 
   ctx.on('llm/stream', (options, next) => {
     const sessionId = options?.sessionId
@@ -706,7 +706,7 @@ export function apply(ctx, config) {
       clearInterval(pumpTimer)
       pumpTimer = undefined
     }
-  }, 'dsh-provider-clone: reconcile pump')
+  }, 'dsh-route-clone: reconcile pump')
   const schedule = (mode) => {
     if (mode === 'config' || pendingMode === undefined) pendingMode = mode
   }
@@ -719,10 +719,10 @@ export function apply(ctx, config) {
     ctx.effect(() => {
       const timer = setTimeout(() => { void reconcile('ensure') }, delay)
       return () => clearTimeout(timer)
-    }, `dsh-provider-clone: ensure after ${delay}ms`)
+    }, `dsh-route-clone: ensure after ${delay}ms`)
   }
 
   logLine('info', `apply: settings section "${settingsNs}", clones=${JSON.stringify(read(config.clones) ?? {})}`)
   schedule('config')
-  ctx.logger.debug?.(`dsh-provider-clone: active as settings section "${settingsNs}"`)
+  ctx.logger.debug?.(`dsh-route-clone: active as settings section "${settingsNs}"`)
 }

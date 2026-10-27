@@ -1,5 +1,5 @@
 /**
- * dsh-provider-clone — Client half.
+ * dsh-route-clone — Client half.
  *
  * Adds a "route clone" panel to the Models settings page footer: pick a
  * catalog provider preset, pick the models to copy, name the copy, and create
@@ -12,13 +12,13 @@
  * panel copies the connection and model facts instead.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-provider-clone',
+  id: 'dsh-route-clone',
   factory: (require) => {
     const React = require('react')
     const h = React.createElement
     const { useCallback, useEffect, useMemo, useRef, useState } = React
 
-    const NS = 'provider-clone'
+    const NS = 'route-clone'
     const PI_AI = 'llm-pi-ai'
 
     const DICTS = {
@@ -588,10 +588,10 @@ window.__ModuleLoader__.load({
     }
 
     function apply(ctx) {
-      ctx.effect(() => ctx.locale.register(NS, DICTS), 'dsh-provider-clone: copy dictionaries')
+      ctx.effect(() => ctx.locale.register(NS, DICTS), 'dsh-route-clone: copy dictionaries')
       ctx.slots.inject('settings.models.footer', () => ctx.slots.register({
         name: 'settings.models.footer',
-        id: 'provider-clone',
+        id: 'route-clone',
         order: 20,
       }, panel(ctx)))
     }

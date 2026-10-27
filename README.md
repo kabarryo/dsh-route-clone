@@ -1,4 +1,4 @@
-# dsh-provider-clone（路由克隆 / Route Clone）
+# dsh-route-clone（路由克隆 / Route Clone）
 
 在 DSH 里给同一个模型提供商配两把（或多把）API Key：把某个预设 provider 的**路由配置**（端点、协议、模型清单、容量与兼容开关）复制成一个独立命名、独立凭据的路由组，再用 `/model` 或输入框的模型菜单在两者之间切换。
 
@@ -9,13 +9,13 @@
 从 GitHub 安装到某个 profile（把 `web` 换成你的 profile 名）：
 
 ```sh
-dsh plugin --profile web add https://github.com/kabarryo/dsh-provider-clone.git
+dsh plugin --profile web add https://github.com/kabarryo/dsh-route-clone.git
 ```
 
 本地开发也可以直接链接目录：
 
 ```sh
-dsh plugin --profile web add /path/to/dsh-provider-clone
+dsh plugin --profile web add /path/to/dsh-route-clone
 ```
 
 没有构建步骤。Host 半的源码改动需要重启宿主（桌面 App 或 web 实例）才会加载；客户端刷新页面即可。
@@ -63,7 +63,7 @@ DSH 用 `provider/model` 寻址模型，每个 `provider` 是一条路由，路�
 
 ## 排错
 
-克隆创建后没有出现新的提供商行时，看 `~/.dsh/logs/provider-clone.log`。插件把每次 reconcile、每条路由的生成结果和写入失败原因追加在那里。
+克隆创建后没有出现新的提供商行时，看 `~/.dsh/logs/route-clone.log`。插件把每次 reconcile、每条路由的生成结果和写入失败原因追加在那里。
 
 一个曾经的坑：设置页的写入在 `hmr.runExclusive()` 事务里执行，`loader/volatile-update` 也是从事务中间发出的；在监听器里同步写另一个 namespace 会触发 "HMR transactions cannot be nested"。插件因此把写入放到启动时创建的中断泵里执行，监听器只留一个待办标记。
 

@@ -27,7 +27,7 @@ const sandbox = {
   URL,
 }
 vm.runInNewContext(fs.readFileSync(new URL('../client.js', import.meta.url), 'utf8'), sandbox)
-assert.equal(loaded.id, 'dsh-provider-clone')
+assert.equal(loaded.id, 'dsh-route-clone')
 
 const module = loaded.factory((id) => {
   if (id === 'react') return React
@@ -57,7 +57,7 @@ const ctx = {
 
 module.apply(ctx)
 assert.equal(registered.options.name, 'settings.models.footer')
-assert.equal(registered.options.id, 'provider-clone')
+assert.equal(registered.options.id, 'route-clone')
 
 const html = renderToString(React.createElement(registered.component, {}))
 assert.match(html, /路由克隆/)

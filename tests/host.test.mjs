@@ -22,7 +22,7 @@ const piValue = {
 }
 const descriptors = [
   { ns: 'llm-pi-ai', revision: 1, value: piValue, base: {}, user: {} },
-  { ns: 'provider-clone', revision: 3, value: { clones: {} }, base: {}, user: {} },
+  { ns: 'route-clone', revision: 3, value: { clones: {} }, base: {}, user: {} },
 ]
 
 const settings = {
@@ -44,7 +44,7 @@ const settings = {
 const listeners = new Map()
 const ctx = {
   settings,
-  fiber: { entry: { options: { id: 'provider-clone' } } },
+  fiber: { entry: { options: { id: 'route-clone' } } },
   logger: { debug() {}, info() {}, warn: (...args) => console.warn(...args), error() {} },
   effect(fn) { return fn() },
   on(event, listener) { listeners.set(event, listener); return () => {} },
