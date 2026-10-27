@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Route Clone",
+    "description": "Copy a provider preset's route configuration (endpoint, protocol, model list) into an independently named copy with its own API key. This does not add a pi-ai catalog preset."
+  }
+}

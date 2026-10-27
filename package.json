@@ -1,0 +1,53 @@
+{
+  "name": "dsh-provider-clone",
+  "version": "0.1.0",
+  "description": "Copy a provider preset's route configuration (endpoint, protocol, model list) into an independently named copy with its own API key, then switch in the model picker.",
+  "license": "MIT",
+  "author": "kabarryo",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "provider",
+    "route",
+    "api-key",
+    "clone"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabarryo/dsh-provider-clone.git"
+  },
+  "homepage": "https://github.com/kabarryo/dsh-provider-clone#readme",
+  "bugs": {
+    "url": "https://github.com/kabarryo/dsh-provider-clone/issues"
+  }
+}
